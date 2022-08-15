@@ -1,12 +1,17 @@
 <?php include'db_connect.php' ?>
 <div class="col-lg-12">
 	<div class="card card-outline card-success">
-		<div class="card-header">
+		<!-- <div class="card-header">
 			<div class="card-tools">
-				<a class="btn btn-block btn-sm btn-default btn-flat border-primary" href="./index.php?page=new_project"><i class="fa fa-plus"></i> Add New project</a>
+				<a class="btn btn-block btn-sm btn-default btn-flat" style="border-radius: 8px" href="./index.php?page=new_project">Add New Task <i class="fa fa-plus" style="color: #800000"></i></a>
 			</div>
-		</div>
+		</div> -->
 		<div class="card-body">
+			<div class="row">
+				<div class="col-sm-1">
+					<a class="btn btn-block btn-sm btn-default btn-flat" style="border-radius: 8px" href="./index.php?page=new_project">Add New <i class="fa fa-plus" style="color: white;background-color: #800000;"></i></a>
+				</div>
+			</div>
 			<table class="table tabe-hover table-condensed" id="list">
 				<colgroup>
 					<col width="5%">
@@ -127,7 +132,13 @@
 </style>
 <script>
 	$(document).ready(function(){
-		$('#list').dataTable()
+		$('#list').dataTable({
+			"bPaginate": false,
+		    "bLengthChange": false,
+		    "bFilter": true,
+		    "bInfo": false,
+		    "bAutoWidth": false 
+		})
 	$('.new_productivity').click(function(){
 		uni_modal("<i class='fa fa-plus'></i> New Progress for: "+$(this).attr('data-task'),"manage_progress.php?pid="+$(this).attr('data-pid')+"&tid="+$(this).attr('data-tid'),'large')
 	})

@@ -2,10 +2,13 @@
 <?php
 $twhere ="";
 if($_SESSION['login_type'] != 1)
-  $twhere = "  ";
+  $twhere = " ";
 ?>
 <!-- Info boxes -->
- <div class="col-12">
+ <div class="col-12" id="date" style="margin-left: -5px">
+
+</div>
+ <div class="col-12" style="padding-top: 10px;margin-left: -5px">
           <div class="card">
             <div class="card-body">
               Welcome <?php echo $_SESSION['login_name'] ?>!
@@ -161,3 +164,7 @@ if($_SESSION['login_type'] != 1)
       </div>
         </div>
       </div>
+<script type="text/javascript">
+  var today = new Date();
+  $('#date').html(`<span style="margin-top:-25px;position:absolute;">${today}</span>`)
+</script>

@@ -38,7 +38,7 @@
           </div><!-- /.col -->
 
         </div><!-- /.row -->
-            <hr class="border-primary">
+            <!-- <hr class="border-primary"> -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -122,7 +122,7 @@
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2021 <a href="https://www.campcodes.com/">CampCodes</a>.</strong>
+    <strong>Sansekerta Consulting Group &copy; 2022.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b><?php echo $_SESSION['system']['name'] ?></b>

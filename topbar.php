@@ -1,10 +1,10 @@
 <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-primary navbar-dark ">
+  <nav class="main-header navbar navbar-expand">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <?php if(isset($_SESSION['login_id'])): ?>
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="" role="button"><i class="fas fa-bars"></i></a>
+        <!-- <a class="nav-link" data-widget="pushmenu" href="" role="button"><i class="fas fa-bars"></i></a> -->
       </li>
     <?php endif; ?>
       <li>
@@ -16,16 +16,16 @@
      
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
+          <i class="fas fa-expand-arrows-alt" style="color: grey"></i>
         </a>
       </li>
      <li class="nav-item dropdown">
             <a class="nav-link"  data-toggle="dropdown" aria-expanded="true" href="javascript:void(0)">
               <span>
                 <div class="d-felx badge-pill">
-                  <span class="fa fa-user mr-2"></span>
+                  <span class="fa fa-user mr-2" style="color: grey"></span>
                   <span><b><?php echo ucwords($_SESSION['login_firstname']) ?></b></span>
-                  <span class="fa fa-angle-down ml-2"></span>
+                  <span class="fa fa-angle-down ml-2" style="color: grey"></span>
                 </div>
               </span>
             </a>
