@@ -102,10 +102,11 @@
                                 INNER JOIN par_user_role c on b.id_tabel_role = c.id_role
                                 WHERE c.is_active = 1 and b.id_tabel_role = '".$_SESSION['login_type']."'");
           while($row= $qry->fetch_assoc()):
+            // echo var_dump($qry);
         ?>
         <?php
         if ($row['parent'] == '0') {
-          if ($row['url'] =="" or $row['url']==null) {
+          if ($row['url']==null) {
             ?>
             <li class="nav-item dropdown">
               <a href="./" class="nav-link nav-home">
@@ -116,10 +117,10 @@
               </a>
             </li>  
             <?php
-          }else if($row['parent'] == '0' and $row['have_child'] == '0'){
+          }else if($row['url']!=null and $row['url']!='#'){
             ?>
               <li class="nav-item dropdown">
-                <a <?php echo 'href="./index.php?page=dashboard"';?> class="nav-link nav-home">
+                <a <?php echo 'href="'.$row['url'].'"';?> class="nav-link nav-home">
                   <i <?php echo 'class="'.$row['icon'].'"'; ?>></i>
                   <p >
                     <?php echo $row['nama_menu']; ?>
@@ -130,7 +131,7 @@
           }
         ?>
         <?php
-        }else if ( $row['id_menu'] == '9') {
+        }else if ($row['id_menu'] == '2') {
          ?>
            <li class="nav-item">
             <a href="#" class="nav-link nav-edit_user">
@@ -156,7 +157,7 @@
             </ul>
           </li>
             <?php
-          }else if ($row['id_menu'] == '4') {
+          }else if ($row['id_menu'] == '6') {
            ?>
               <li class="nav-item">
                 <a href="#" class="nav-link nav-edit_project nav-view_project">
