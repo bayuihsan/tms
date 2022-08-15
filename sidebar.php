@@ -97,10 +97,10 @@
       <ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">
        <?php
           $i = 1;
-          $qry = $conn->query("SELECT a.*,b.login_type,c.nama_role from table_menu a
+          $qry = $conn->query("SELECT a.*,b.id_tabel_role,c.nama_role from tabel_menu a
                                 INNER JOIN tabel_role b on a.id_menu = b.id_menu
-                                INNER JOIN par_user_role c on b.login_type = c.id_par_user_role
-                                WHERE c.is_active = 1 and b.login_type = '".$_SESSION['login_type']."'");
+                                INNER JOIN par_user_role c on b.id_tabel_role = c.id_role
+                                WHERE c.is_active = 1 and b.id_tabel_role = '".$_SESSION['login_type']."'");
           while($row= $qry->fetch_assoc()):
         ?>
         <?php
