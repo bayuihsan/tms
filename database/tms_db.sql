@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 15 Agu 2022 pada 15.09
--- Versi server: 10.4.24-MariaDB
--- Versi PHP: 8.1.6
+-- Generation Time: Aug 15, 2022 at 04:06 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `par_user_role`
+-- Table structure for table `par_user_role`
 --
 
 CREATE TABLE `par_user_role` (
@@ -33,10 +33,19 @@ CREATE TABLE `par_user_role` (
   `is_active` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `par_user_role`
+--
+
+INSERT INTO `par_user_role` (`id_role`, `nama_role`, `is_active`) VALUES
+(1, 'Admin', 1),
+(2, 'User(Direktur, Consulting & Reasearch Division)', 1),
+(3, 'User (Pembina)', 1);
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `project_list`
+-- Table structure for table `project_list`
 --
 
 CREATE TABLE `project_list` (
@@ -52,7 +61,7 @@ CREATE TABLE `project_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `project_list`
+-- Dumping data for table `project_list`
 --
 
 INSERT INTO `project_list` (`id`, `name`, `description`, `status`, `start_date`, `end_date`, `manager_id`, `user_ids`, `date_created`) VALUES
@@ -62,7 +71,7 @@ INSERT INTO `project_list` (`id`, `name`, `description`, `status`, `start_date`,
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `system_settings`
+-- Table structure for table `system_settings`
 --
 
 CREATE TABLE `system_settings` (
@@ -75,7 +84,7 @@ CREATE TABLE `system_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `system_settings`
+-- Dumping data for table `system_settings`
 --
 
 INSERT INTO `system_settings` (`id`, `name`, `email`, `contact`, `address`, `cover_img`) VALUES
@@ -84,7 +93,7 @@ INSERT INTO `system_settings` (`id`, `name`, `email`, `contact`, `address`, `cov
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tabel_menu`
+-- Table structure for table `tabel_menu`
 --
 
 CREATE TABLE `tabel_menu` (
@@ -97,21 +106,52 @@ CREATE TABLE `tabel_menu` (
   `is_active` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `tabel_menu`
+--
+
+INSERT INTO `tabel_menu` (`id_menu`, `nama_menu`, `url`, `icon`, `parent`, `have_child`, `is_active`) VALUES
+(1, 'Dashboard', NULL, 'nav-icon fas fa fa-th-large', 0, 0, 1),
+(2, 'Projects', '#', 'nav-icon fas fa-layer-group', 2, 1, 1),
+(3, 'Add New', './index.php?page=new_project', 'fas fa-angle-right nav-icon', 2, 0, 1),
+(4, 'List', './index.php?page=project_list', 'fas fa-angle-right nav-icon', 2, 0, 1),
+(5, 'Task', './index.php?page=task_list', 'fa fa-file nav-icon', 0, 0, 1),
+(6, 'Users', '#', 'nav-icon fas fa-users', 6, 1, 1),
+(7, 'Add New', './index.php?page=new_user', 'fas fa-angle-right nav-icon', 6, 0, 1),
+(8, 'List', './index.php?page=user_list', 'fas fa-angle-right nav-icon', 6, 0, 1),
+(17, 'Calender', './index.php?page=calender', 'fa fa-calendar nav-icon', 0, 0, 1);
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tabel_role`
+-- Table structure for table `tabel_role`
 --
 
 CREATE TABLE `tabel_role` (
-  `id_tabel_role` int(11) DEFAULT NULL,
-  `id_menu` int(11) DEFAULT NULL
+  `id_menu` int(11) NOT NULL,
+  `id_tabel_role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tabel_role`
+--
+
+INSERT INTO `tabel_role` (`id_menu`, `id_tabel_role`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 1),
+(13, 1),
+(17, 1);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `task_list`
+-- Table structure for table `task_list`
 --
 
 CREATE TABLE `task_list` (
@@ -124,7 +164,7 @@ CREATE TABLE `task_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `task_list`
+-- Dumping data for table `task_list`
 --
 
 INSERT INTO `task_list` (`id`, `project_id`, `task`, `description`, `status`, `date_created`) VALUES
@@ -136,7 +176,7 @@ INSERT INTO `task_list` (`id`, `project_id`, `task`, `description`, `status`, `d
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -151,12 +191,12 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `type`, `avatar`, `date_created`) VALUES
-(1, 'Administrator', '', 'admin@admin.com', '0192023a7bbd73250516f069df18b500', 1, 'no-image-available.png', '2020-11-26 10:57:04'),
-(2, 'John', 'Smith', 'jsmith@sample.com', 'e10adc3949ba59abbe56e057f20f883e', 2, '1606978560_avatar.jpg', '2020-12-03 09:26:03'),
+(1, 'Administrator', '', 'admin@admin.com', '14256b5f35af2e772c0799eff0519e8b', 1, 'no-image-available.png', '2020-11-26 10:57:04'),
+(2, 'John', 'Smith', 'jsmith@sample.com', '14256b5f35af2e772c0799eff0519e8b', 2, '1606978560_avatar.jpg', '2020-12-03 09:26:03'),
 (3, 'Claire', 'Blake', 'cblake@sample.com', 'e10adc3949ba59abbe56e057f20f883e', 3, '1606958760_47446233-clean-noir-et-gradient-sombre-image-de-fond-abstrait-.jpg', '2020-12-03 09:26:42'),
 (4, 'George', 'Wilson', 'gwilson@sample.com', 'e10adc3949ba59abbe56e057f20f883e', 3, '1606963560_avatar.jpg', '2020-12-03 10:46:41'),
 (5, 'Mike', 'Williams', 'mwilliams@sample.com', '3cc93e9a6741d8b40460457139cf8ced', 3, '1606963620_47446233-clean-noir-et-gradient-sombre-image-de-fond-abstrait-.jpg', '2020-12-03 10:47:06');
@@ -164,7 +204,7 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `password`, `type`,
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_productivity`
+-- Table structure for table `user_productivity`
 --
 
 CREATE TABLE `user_productivity` (
@@ -182,7 +222,7 @@ CREATE TABLE `user_productivity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `user_productivity`
+-- Dumping data for table `user_productivity`
 --
 
 INSERT INTO `user_productivity` (`id`, `project_id`, `task_id`, `comment`, `subject`, `date`, `start_time`, `end_time`, `user_id`, `time_rendered`, `date_created`) VALUES
@@ -198,89 +238,95 @@ INSERT INTO `user_productivity` (`id`, `project_id`, `task_id`, `comment`, `subj
 --
 
 --
--- Indeks untuk tabel `par_user_role`
+-- Indexes for table `par_user_role`
 --
 ALTER TABLE `par_user_role`
   ADD PRIMARY KEY (`id_role`);
 
 --
--- Indeks untuk tabel `project_list`
+-- Indexes for table `project_list`
 --
 ALTER TABLE `project_list`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `system_settings`
+-- Indexes for table `system_settings`
 --
 ALTER TABLE `system_settings`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tabel_menu`
+-- Indexes for table `tabel_menu`
 --
 ALTER TABLE `tabel_menu`
   ADD PRIMARY KEY (`id_menu`);
 
 --
--- Indeks untuk tabel `task_list`
+-- Indexes for table `tabel_role`
+--
+ALTER TABLE `tabel_role`
+  ADD PRIMARY KEY (`id_menu`);
+
+--
+-- Indexes for table `task_list`
 --
 ALTER TABLE `task_list`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `user_productivity`
+-- Indexes for table `user_productivity`
 --
 ALTER TABLE `user_productivity`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `par_user_role`
+-- AUTO_INCREMENT for table `par_user_role`
 --
 ALTER TABLE `par_user_role`
-  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `project_list`
+-- AUTO_INCREMENT for table `project_list`
 --
 ALTER TABLE `project_list`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `system_settings`
+-- AUTO_INCREMENT for table `system_settings`
 --
 ALTER TABLE `system_settings`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tabel_menu`
+-- AUTO_INCREMENT for table `tabel_menu`
 --
 ALTER TABLE `tabel_menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT untuk tabel `task_list`
+-- AUTO_INCREMENT for table `task_list`
 --
 ALTER TABLE `task_list`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `user_productivity`
+-- AUTO_INCREMENT for table `user_productivity`
 --
 ALTER TABLE `user_productivity`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
