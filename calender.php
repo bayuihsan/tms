@@ -29,6 +29,11 @@
                                     <label for="end_datetime" class="control-label">End</label>
                                     <input type="datetime-local" class="form-control form-control-sm rounded-0" name="end_datetime" id="end_datetime" required>
                                 </div>
+                                <div class="form-group mb-2" style="display: none">
+                                    <label for="id_user" class="control-label">id_user</label>
+                                    <input type="text" class="form-control form-control-sm rounded-0" name="id_user" id="id_user" 
+                                    <?php echo 'value="'.$_SESSION['login_id'].'"'; ?>>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -77,7 +82,8 @@
     <!-- Event Details Modal -->
 
 <?php 
-$schedules = $conn->query("SELECT * FROM `schedule_list`");
+// var_dump($_SESSION['login_id']);
+$schedules = $conn->query("SELECT * FROM `schedule_list` where id_user = '".$_SESSION['login_id']."'");
 $sched_res = [];
 foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
     $row['sdate'] = date("F d, Y h:i A",strtotime($row['start_datetime']));

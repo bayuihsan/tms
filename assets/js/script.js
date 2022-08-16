@@ -5,7 +5,7 @@
         if (!!scheds) {
             Object.keys(scheds).map(k => {
                 var row = scheds[k]
-                events.push({ id: row.id, title: row.title, start: row.start_datetime, end: row.end_datetime });
+                events.push({ id: row.id, title: row.title, start: row.start_datetime, end: row.end_datetime, end: row.id_user })
             })
         }
         var date = new Date()

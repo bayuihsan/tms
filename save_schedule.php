@@ -6,12 +6,13 @@ if($_SERVER['REQUEST_METHOD'] !='POST'){
     exit;
 }
 extract($_POST);
+// echo json_encode($_POST);die();
 $allday = isset($allday);
 
 if(empty($id)){
-    $sql = "INSERT INTO `schedule_list` (`title`,`description`,`start_datetime`,`end_datetime`) VALUES ('$title','$description','$start_datetime','$end_datetime')";
+    $sql = "INSERT INTO `schedule_list` (`title`,`description`,`start_datetime`,`end_datetime`, `id_user`) VALUES ('$title','$description','$start_datetime','$end_datetime', '$id_user')";
 }else{
-    $sql = "UPDATE `schedule_list` set `title` = '{$title}', `description` = '{$description}', `start_datetime` = '{$start_datetime}', `end_datetime` = '{$end_datetime}' where `id` = '{$id}'";
+    $sql = "UPDATE `schedule_list` set `title` = '{$title}', `description` = '{$description}', `start_datetime` = '{$start_datetime}', `end_datetime` = '{$end_datetime}', `id_user` = '{$id_user}' where `id` = '{$id}'";
 }
 $save = $conn->query($sql);
 if($save){
