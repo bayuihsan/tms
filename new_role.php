@@ -2,13 +2,14 @@
 <div class="col-lg-6">
 	<div class="card">
 		<div class="card-body">
-			<form action="" id="manage_user">
+			<small id="#msg"></small>
+			<form action="" id="manage_role">
 				<input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="" class="control-label">Akses Menu</label>
-							<select name="type" id="type" class="custom-select custom-select-sm">
+							<select name="type" id="menu" class="custom-select custom-select-sm">
 								 <?php
 							          $qry = $conn->query("SELECT * FROM tabel_menu
 							                               WHERE is_active = 1 and parent = 0 ");
@@ -38,11 +39,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-12" style="margin-left: -6px">
-					<button class="btn btn-primary mr-2">Save</button>
-					<button class="btn btn-secondary" type="button" onclick="location.href = 'index.php?page=user_list'">Cancel</button>
-				</div>
 			</form>
+			<div class="col-lg-12" style="margin-left: -6px">
+					<button class="btn btn-primary mr-2" onclick="saveRole()" >Save</button>
+					<button class="btn btn-secondary" type="button" onclick="location.href = 'index.php?page=role'">Cancel</button>
+				</div>
 		</div>
 	</div>
 </div>
@@ -55,63 +56,29 @@
 	}
 </style>
 <script>
-	$('[name="password"],[name="cpass"]').keyup(function(){
-		var pass = $('[name="password"]').val()
-		var cpass = $('[name="cpass"]').val()
-		if(cpass == '' ||pass == ''){
-			$('#pass_match').attr('data-status','')
-		}else{
-			if(cpass == pass){
-				$('#pass_match').attr('data-status','1').html('<i class="text-success">Password Matched.</i>')
-			}else{
-				$('#pass_match').attr('data-status','2').html('<i class="text-danger">Password does not match.</i>')
-			}
-		}
-	})
-	function displayImg(input,_this) {
-	    if (input.files && input.files[0]) {
-	        var reader = new FileReader();
-	        reader.onload = function (e) {
-	        	$('#cimg').attr('src', e.target.result);
-	        }
 
-	        reader.readAsDataURL(input.files[0]);
-	    }
-	}
-	$('#manage_user').submit(function(e){
-		e.preventDefault()
-		$('input').removeClass("border-danger")
-		start_load()
-		$('#msg').html('')
-		if($('[name="password"]').val() != '' && $('[name="cpass"]').val() != ''){
-			if($('#pass_match').attr('data-status') != 1){
-				if($("[name='password']").val() !=''){
-					$('[name="password"],[name="cpass"]').addClass("border-danger")
-					end_load()
-					return false;
-				}
-			}
-		}
-		$.ajax({
-			url:'ajax.php?action=save_user',
-			data: new FormData($(this)[0]),
-		    cache: false,
-		    contentType: false,
-		    processData: false,
+	
+	function saveRole(){
+	    	start_load();
+			var id_menu = $('#menu').val();
+			var id_tabel_role = $('#type').val();
+			$.ajax({
+			url:'ajax.php?action=save_role',
+			data: {id_menu:id_menu,id_tabel_role:id_tabel_role},
 		    method: 'POST',
-		    type: 'POST',
 			success:function(resp){
 				if(resp == 1){
 					alert_toast('Data successfully saved.',"success");
 					setTimeout(function(){
-						location.replace('index.php?page=user_list')
+						location.replace('index.php?page=role')
 					},750)
-				}else if(resp == 2){
-					$('#msg').html("<div class='alert alert-danger'>Email already exist.</div>");
-					$('[name="email"]').addClass("border-danger")
-					end_load()
+				}else{
+					alert_toast('Failed save data.',"Failed");
 				}
+			    end_load()
+
 			}
 		})
-	})
+	}
+	
 </script>

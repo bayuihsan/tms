@@ -36,6 +36,13 @@ if($action == 'save_user'){
 	if($save)
 		echo $save;
 }
+
+if($action == 'save_role'){
+	$save = $crud->save_role();
+	if($save)
+		echo $save;
+}
+
 if($action == 'update_user'){
 	$save = $crud->update_user();
 	if($save)

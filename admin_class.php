@@ -85,6 +85,41 @@ Class Action {
 			return 1;
 		}
 	}
+
+	function save_role(){
+		extract($_POST);
+        $check = $this->db->query("SELECT * FROM  tabel_role where id_menu = '".$id_menu."' and id_tabel_role = '".$id_tabel_role."'")->num_rows;
+        if($check>0){
+			return 2;
+			exit;
+		}
+
+		
+		if(empty($id_menu) or empty($id_tabel_role)){
+			return 2;
+			exit;
+		}else{
+			if ($id_menu == 2) {
+				$save = $this->db->query("INSERT tabel_role (id_menu, id_tabel_role) values 
+					('2', '".$id_tabel_role."' ),
+					('3', '".$id_tabel_role."' ),
+					('4', '".$id_tabel_role."' ) ");
+				
+			}else if ($id_menu == 6) {
+				$save = $this->db->query("INSERT tabel_role (id_menu, id_tabel_role) values 
+					('6', '".$id_tabel_role."' ),
+					('7', '".$id_tabel_role."' ),
+					('8', '".$id_tabel_role."' ) ");
+			}else{
+				$save = $this->db->query("INSERT tabel_role (id_menu, id_tabel_role) values ('".$id_menu."', '".$id_tabel_role."' ) ");
+			}
+		}
+
+		if($save){
+			return 1;
+		}
+	}
+
 	function signup(){
 		extract($_POST);
 		$data = "";

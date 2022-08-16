@@ -53,11 +53,12 @@
 <script>
 	$(document).ready(function(){
 		$('#list').dataTable({
-			"bPaginate": false,
+			// "bPaginate": false,
 		    "bLengthChange": false,
 		    "bFilter": true,
 		    "bInfo": false,
-		    "bAutoWidth": false 
+		    "bAutoWidth": false,
+		    "pageLength": 10
 		})
 		// $('#delete_role').click(function(){
 		// _conf("Are you sure to delete this role akses?","delete_role")
