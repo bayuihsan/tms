@@ -54,6 +54,12 @@ if($action == 'delete_user'){
 		echo $save;
 }
 
+if($action == 'delete_schedule'){
+	$save = $crud->delete_schedule();
+	if($save)
+		echo $save;
+}
+
 if($action == 'delete_role'){
 	$save = $crud->delete_role();
 	if($save)

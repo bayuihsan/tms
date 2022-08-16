@@ -94,7 +94,7 @@ Class Action {
 			exit;
 		}
 
-		
+
 		if(empty($id_menu) or empty($id_tabel_role)){
 			return 2;
 			exit;
@@ -216,6 +216,13 @@ Class Action {
 	function delete_user(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM users where id = ".$id);
+		if($delete)
+			return 1;
+	}
+
+	function delete_schedule(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM schedule_list where id = ".$id);
 		if($delete)
 			return 1;
 	}

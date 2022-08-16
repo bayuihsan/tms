@@ -15,7 +15,7 @@ if(empty($id)){
 }
 $save = $conn->query($sql);
 if($save){
-    echo "<script> alert('Schedule Successfully Saved.'); location.replace('./') </script>";
+    echo "<script>location.replace('index.php?page=calender') </script>";
 }else{
     echo "<pre>";
     echo "An Error occured.<br>";

@@ -68,17 +68,4 @@
                 alert("Event is undefined");
             }
         })
-
-        // Delete Button / Deleting an Event
-        $('#delete').click(function() {
-            var id = $(this).attr('data-id')
-            if (!!scheds[id]) {
-                var _conf = confirm("Are you sure to delete this scheduled event?");
-                if (_conf === true) {
-                    location.href = "./delete_schedule.php?id=" + id;
-                }
-            } else {
-                alert("Event is undefined");
-            }
-        })
     })

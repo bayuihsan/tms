@@ -34,7 +34,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="text-center">
-                            <button class="btn btn-primary btn-sm rounded-0" type="submit" form="schedule-form"><i class="fa fa-save"></i> Save</button>
+                            <button class="btn btn-primary btn-sm rounded-0" type="submit" id="save" form="schedule-form"><i class="fa fa-save"></i> Save</button>
                             <button class="btn btn-default border btn-sm rounded-0" type="reset" form="schedule-form"><i class="fa fa-reset"></i> Cancel</button>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
         </div>
     </div>
     <!-- Event Details Modal -->
-    <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="event-details-modal">
+    <div class="modal" tabindex="-1" data-bs-backdrop="static" id="event-details-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-0">
                 <div class="modal-header rounded-0">
@@ -68,7 +68,7 @@
                     <div class="text-end">
                         <button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button>
                         <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button>
-                        <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary btn-sm rounded-0" onclick="hide()" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -90,6 +90,36 @@ if(isset($conn)) $conn->close();
 ?>
 <script>
     var scheds = $.parseJSON('<?= json_encode($sched_res) ?>')
+    $(document).ready(function(){
+      $('#delete').click(function(){
+      _conf("Are you sure to delete this schedule?","delete_schedule",[$(this).attr('data-id')])
+      })
+      })
+
+      function delete_schedule($id){
+        start_load()
+        // alert(id);
+        $.ajax({
+          url:'ajax.php?action=delete_schedule',
+          method:'POST',
+          data:{id:$id},
+          success:function(resp){
+            if(resp==1){
+              alert_toast("Data successfully deleted",'success')
+              setTimeout(function(){
+                location.reload()
+              },1500)
+
+            }
+          }
+        })
+      }
+
+    function hide(){
+      $('.modal').modal('hide');
+    }
+
+
 </script>
  <style>
         :root {
