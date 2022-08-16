@@ -138,33 +138,88 @@ if($_SESSION['login_type'] != 1)
         </div>
         <div class="col-md-4">
           <div class="row">
-          <div class="col-12 col-sm-6 col-md-12">
-            <div class="small-box bg-light shadow-sm border">
-              <div class="inner">
-                <h3><?php echo $conn->query("SELECT * FROM project_list $where")->num_rows; ?></h3>
+            <div class="col-12 col-sm-6 col-md-12">
+              <div class="small-box bg-light shadow-sm border">
+                <div class="inner">
+                  <h3><?php echo $conn->query("SELECT * FROM project_list $where")->num_rows; ?></h3>
 
-                <p>Total Projects</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-layer-group"></i>
-              </div>
-            </div>
-          </div>
-           <div class="col-12 col-sm-6 col-md-12">
-            <div class="small-box bg-light shadow-sm border">
-              <div class="inner">
-                <h3><?php echo $conn->query("SELECT t.*,p.name as pname,p.start_date,p.status as pstatus, p.end_date,p.id as pid FROM task_list t inner join project_list p on p.id = t.project_id $where2")->num_rows; ?></h3>
-                <p>Total Tasks</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-tasks"></i>
+                  <p>Total Projects</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-layer-group"></i>
+                </div>
               </div>
             </div>
-          </div>
+             <div class="col-12 col-sm-6 col-md-12">
+              <div class="small-box bg-light shadow-sm border">
+                <div class="inner">
+                  <h3><?php echo $conn->query("SELECT t.*,p.name as pname,p.start_date,p.status as pstatus, p.end_date,p.id as pid FROM task_list t inner join project_list p on p.id = t.project_id $where2")->num_rows; ?></h3>
+                  <p>Total Tasks</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-tasks"></i>
+                </div>
+              </div>
+            </div>
+         </div>
+        </div>
       </div>
+
+      <!-- dash task -->
+      <div class="row" style="margin-left: 2px">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-12">
+              <a style="float: right;font-size: 15px; margin-top: 15px;color: #3884e9" href="./index.php?page=task_list">See All</a> 
+              <h3>Task For Today </h3>
+              <?php
+                $i = -1;
+                // $type = array('',"Admin","Project Manager","Employee");
+                $qry = $conn->query("SELECT * FROM task_list limit 3");
+                while($row= $qry->fetch_assoc()):
+                $i++;
+                ?>
+                  <div class="small-box shadow-sm border" >
+                    <div class="row">
+                      <div class="col-sm" style="width: 100px" <?php echo 'id="marks'.$i.'"'; ?>>
+                        
+                      </div>
+                      <div class="col-sm-11">
+                      <div class="inner">
+                        <h3>s</h3>
+                        <p><?php echo $row['description']; ?></p>
+                      </div>
+                      <div class="icon">
+                        <!-- <p><?php echo $row['status']; ?></p> -->
+                        <i class="fa fa-tasks"></i>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+              <?php endwhile; ?>
+
+              
+            </div>
+            
+         </div>
         </div>
       </div>
 <script type="text/javascript">
   var today = new Date();
   $('#date').html(`<span style="margin-top:-25px;position:absolute;">${today}</span>`)
+   $(document).ready(function(){
+     var colors = ['#ff0000', '#00ff00', '#0000ff', '#f0ff00'];
+     for (var i = 0; i < 30; i++) {
+     var random_color = colors[Math.floor(Math.random() * colors.length)];
+     document.getElementById('marks'+i).style.background = random_color;
+     }
+    })
 </script>
+<style type="text/css">
+  /*@media (min-width: 576px)*/
+  .col-sm{
+    -ms-flex: 0 0 8.333333% !important;
+    flex: 0 0 8.333333% !important;
+    max-width: 0.333333% !important;
+}
+</style>
