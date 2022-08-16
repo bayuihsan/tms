@@ -1,12 +1,14 @@
 <?php include'db_connect.php' ?>
 <div class="col-lg-12">
 	<div class="card card-outline card-success">
-		<div class="card-header">
-			<div class="card-tools">
-				<a class="btn btn-block btn-sm btn-default btn-flat border-primary" href="./index.php?page=new_user"><i class="fa fa-plus"></i> Add New Role</a>
+		<!-- <div class="card-header"> -->
+			<div class="row">
+				<div class="col-sm-1">
+					<a class="btn btn-block btn-sm btn-default btn-flat" style="border-radius: 8px; margin-top: 20px;margin-left: 17px" href="./index.php?page=new_role">Add New <i class="fa fa-plus" style="color: white;background-color: #800000;"></i></a>
+				</div>
 			</div>
-		</div>
-		<div class="card-body">
+		<!-- </div> -->
+		<div class="card-body" style="margin-top: -15px">
 			<table class="table tabe-hover table-bordered" id="list">
 				<thead>
 					<tr>
@@ -50,7 +52,13 @@
 </div>
 <script>
 	$(document).ready(function(){
-		$('#list').dataTable()
+		$('#list').dataTable({
+			"bPaginate": false,
+		    "bLengthChange": false,
+		    "bFilter": true,
+		    "bInfo": false,
+		    "bAutoWidth": false 
+		})
 		// $('#delete_role').click(function(){
 		// _conf("Are you sure to delete this role akses?","delete_role")
 		// })
