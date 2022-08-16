@@ -105,7 +105,7 @@
             // echo var_dump($qry);
         ?>
         <?php
-        if ($row['parent'] == '0') {
+        if ($row['parent'] == 0 and $row['id_menu'] !=2 and $row['id_menu'] !=6 ) {
           if ($row['url']==null) {
             ?>
             <li class="nav-item dropdown">

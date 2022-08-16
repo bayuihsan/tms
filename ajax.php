@@ -46,6 +46,13 @@ if($action == 'delete_user'){
 	if($save)
 		echo $save;
 }
+
+if($action == 'delete_role'){
+	$save = $crud->delete_role();
+	if($save)
+		echo $save;
+}
+
 if($action == 'save_project'){
 	$save = $crud->save_project();
 	if($save)

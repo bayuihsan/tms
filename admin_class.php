@@ -184,6 +184,13 @@ Class Action {
 		if($delete)
 			return 1;
 	}
+
+	function delete_role(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM tabel_role where id_menu = '".$id_menu."' and id_tabel_role ='".$id_tabel_role."' ");
+		if($delete)
+			return 1;
+	}
 	function save_system_settings(){
 		extract($_POST);
 		$data = '';
