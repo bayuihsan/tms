@@ -137,7 +137,7 @@
             <a href="#" class="nav-link nav-edit_user">
               <i class="nav-icon fas fa-users"></i>
               <p >
-                Users
+                Users Management
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>

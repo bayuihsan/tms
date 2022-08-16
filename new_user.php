@@ -1,5 +1,4 @@
-<?php
-?>
+<?php include'db_connect.php' ?>
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-body">
@@ -15,18 +14,22 @@
 							<label for="" class="control-label">Last Name</label>
 							<input type="text" name="lastname" class="form-control form-control-sm" required value="<?php echo isset($lastname) ? $lastname : '' ?>">
 						</div>
-						<?php if($_SESSION['login_type'] == 1): ?>
+						
 						<div class="form-group">
 							<label for="" class="control-label">User Role</label>
 							<select name="type" id="type" class="custom-select custom-select-sm">
-								<option value="3" <?php echo isset($type) && $type == 3 ? 'selected' : '' ?>>Employee</option>
-								<option value="2" <?php echo isset($type) && $type == 2 ? 'selected' : '' ?>>Project Manager</option>
-								<option value="1" <?php echo isset($type) && $type == 1 ? 'selected' : '' ?>>Admin</option>
+								 <?php
+							          $qry = $conn->query("SELECT * FROM par_user_role
+							                               WHERE is_active = 1 and id_role !=1 ");
+							          while($row= $qry->fetch_assoc()):
+							            // echo var_dump($qry);
+							      ?>
+								<option <?php echo 'value="'.$row['id_role'].'"'; ?>> 
+									<?php echo $row['nama_role']; ?>
+							    </option>
+       				 				  <?php endwhile; ?>
 							</select>
 						</div>
-						<?php else: ?>
-							<input type="hidden" name="type" value="3">
-						<?php endif; ?>
 						<div class="form-group">
 							<label for="" class="control-label">Avatar</label>
 							<div class="custom-file">

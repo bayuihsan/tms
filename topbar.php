@@ -1,4 +1,5 @@
 <!-- Navbar -->
+<?php include'db_connect.php' ?>
   <nav class="main-header navbar navbar-expand">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -23,7 +24,27 @@
             <a class="nav-link"  data-toggle="dropdown" aria-expanded="true" href="javascript:void(0)">
               <span>
                 <div class="d-felx badge-pill">
-                  <span class="fa fa-user mr-2" style="color: grey"></span>
+                  <?php 
+                 
+                  $user = $conn->query("SELECT * FROM users where id =".$_SESSION['login_id']);
+                  foreach($user->fetch_array() as $k =>$v){
+                    $meta[$k] = $v;
+                       }
+                  ?>
+                 <?php
+                 if (str_contains($meta['avatar'],'avatar')) {
+                 ?>
+                 <span class="fa fa-user mr-2" style="color: grey">
+                 <?php
+                 }else{
+                  ?>
+                  <span class="mr-2" style="color: grey">
+                     <img src="<?php echo isset($meta['avatar']) ? 'assets/uploads/'.$meta['avatar'] :'' ?>" height="30px" width="35px"
+                     style="border-radius: 100% 100%;margin-top: -5px">
+                  </span>
+                  <?php
+                 }
+                 ?>
                   <span><b><?php echo ucwords($_SESSION['login_firstname']) ?></b></span>
                   <span class="fa fa-angle-down ml-2" style="color: grey"></span>
                 </div>
@@ -42,3 +63,7 @@
         uni_modal('Manage Account','manage_user.php?id=<?php echo $_SESSION['login_id'] ?>')
       })
   </script>
+
+  <style type="text/css">
+  
+  </style>
