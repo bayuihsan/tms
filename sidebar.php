@@ -18,98 +18,52 @@
       // echo json_encode($_SESSION);
       ?>
       <ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item dropdown">
+          <a href="./" class="nav-link nav-home">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Dashboard <?php echo $_SESSION['login_type']?>
+            </p>
+          </a>
+        </li>  
        <?php
-          $i = 1;
           $qry = $conn->query("SELECT a.*,b.id_tabel_role,c.nama_role from tabel_menu a
                                 INNER JOIN tabel_role b on a.id_menu = b.id_menu
                                 INNER JOIN par_user_role c on b.id_tabel_role = c.id_role
-                                WHERE c.is_active = 1 and b.id_tabel_role = '".$_SESSION['login_type']."'");
+                                WHERE a.is_active = 1 and a.parent = 0  and b.id_tabel_role = '".$_SESSION['login_type']."'");
           while($row= $qry->fetch_assoc()):
-            // echo var_dump($qry);
+            // echo var_dump($row);die();
         ?>
-        <?php
-        if ($row['parent'] == 0 and $row['id_menu'] !=2 and $row['id_menu'] !=6 ) {
-          if ($row['url']==null) {
-            ?>
-            <li class="nav-item dropdown">
-              <a href="./" class="nav-link nav-home">
-                <i <?php echo 'class="'.$row['icon'].'"'; ?> ></i>
+            <li class="nav-item">
+              <a href="<?php echo $row['url']?>" class="nav-link nav-edit_project nav-<?php echo $row['page']?>" tree-item>
+                <i class="nav-icon fas fa-layer-group"  style="color: grey"></i>
                 <p >
-                  <?php echo $row['nama_menu']; ?>
+                  <?php echo $row['nama_menu']?>
+                  <?php if($row['have_child']== 1) { ?>
+                  <i class="right fas fa-angle-left"></i>
+                  <?php } ?>
                 </p>
               </a>
-            </li>  
-            <?php
-          }else if($row['url']!=null and $row['url']!='#'){
-            ?>
-              <li class="nav-item dropdown">
-                <a <?php echo 'href="'.$row['url'].'"';?> class="nav-link nav-home">
-                  <i <?php echo 'class="'.$row['icon'].'"'; ?>></i>
-                  <p >
-                    <?php echo $row['nama_menu']; ?>
-                  </p>
-                </a>
-              </li> 
-            <?php
-          }
-        ?>
-        <?php
-        }else if ($row['id_menu'] == '2') {
-         ?>
-           <li class="nav-item">
-            <a href="#" class="nav-link nav-edit_user">
-              <i class="nav-icon fas fa-users"></i>
-              <p >
-                Users Management
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.php?page=new_user" class="nav-link nav-new_user tree-item">
-                  <i class="fas fa-angle-right nav-icon"></i>
-                  <p >Add New</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index.php?page=user_list" class="nav-link nav-user_list tree-item">
-                  <i class="fas fa-angle-right nav-icon"></i>
-                  <p >List</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-            <?php
-          }else if ($row['id_menu'] == '6') {
-           ?>
-              <li class="nav-item">
-                <a href="#" class="nav-link nav-edit_project nav-view_project">
-                  <i class="nav-icon fas fa-layer-group"  style="color: grey"></i>
-                  <p >
-                    Projects
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                <?php if($_SESSION['login_type'] != 3): ?>
-                  <li class="nav-item">
-                    <a href="./index.php?page=new_project" class="nav-link nav-new_project tree-item">
-                      <i class="fas fa-angle-right nav-icon"></i>
-                      <p >Add New</p>
-                    </a>
-                  </li>
-                <?php endif; ?>
-                  <li class="nav-item">
-                    <a href="./index.php?page=project_list" class="nav-link nav-project_list tree-item">
-                      <i class="fas fa-angle-right nav-icon"></i>
-                      <p >List</p>
-                    </a>
-                  </li>
-                </ul>
-              </li> 
-         <?php 
-        }
-        ?>
+              <?php if($row['have_child']== 1) { ?>
+              <ul class="nav nav-treeview">
+                <?php
+                  $qry2 = $conn->query("SELECT a.*,b.id_tabel_role,c.nama_role from tabel_menu a
+                                        INNER JOIN tabel_role b on a.id_menu = b.id_menu
+                                        INNER JOIN par_user_role c on b.id_tabel_role = c.id_role
+                                        WHERE a.is_active = 1 and a.parent = '".$row['id_menu']."'  and b.id_tabel_role = '".$_SESSION['login_type']."'");
+                  while($row2= $qry2->fetch_assoc()):
+                    // echo var_dump($qry);
+                ?>
+                <li class="nav-item">
+                  <a href="<?php echo $row2['url']?>" class="nav-link nav-<?php echo $row2['page']?> tree-item">
+                    <i class="<?php echo $row2['icon']?>"></i>
+                    <p > <?php echo $row2['nama_menu']?></p>
+                  </a>
+                </li>
+                <?php endwhile; ?>
+              </ul>
+              <?php } ?>
+            </li> 
         <?php endwhile; ?>
       </ul>
       </nav>

@@ -18,16 +18,14 @@
 						<div class="form-group">
 							<label for="" class="control-label">User Role</label>
 							<select name="type" id="type" class="custom-select custom-select-sm">
-								 <?php
-							          $qry = $conn->query("SELECT * FROM par_user_role
-							                               WHERE is_active = 1 and id_role !=1 ");
-							          while($row= $qry->fetch_assoc()):
-							            // echo var_dump($qry);
-							      ?>
-								<option <?php echo 'value="'.$row['id_role'].'"'; ?>> 
-									<?php echo $row['nama_role']; ?>
-							    </option>
-       				 				  <?php endwhile; ?>
+								<?php
+						        $qry = $conn->query("SELECT * FROM par_user_role
+						                               WHERE is_active = 1");
+						        while($row= $qry->fetch_assoc()):
+						            
+							     ?>
+								<option value="<?php echo $row['id_role']?>" <?php echo isset($type) && $type == $row['id_role'] ? 'selected' : '' ?> > <?php echo $row['nama_role']; ?></option>
+       				 			<?php endwhile; ?>
 							</select>
 						</div>
 						<div class="form-group">
