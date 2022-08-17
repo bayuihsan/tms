@@ -22,7 +22,7 @@
           <a href="./" class="nav-link nav-home">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
-              Dashboard <?php echo $_SESSION['login_type']?>
+              Dashboard <?php //echo $_SESSION['login_type']?>
             </p>
           </a>
         </li>  
@@ -36,7 +36,7 @@
         ?>
             <li class="nav-item">
               <a href="<?php echo $row['url']?>" class="nav-link nav-edit_project nav-<?php echo $row['page']?>" tree-item>
-                <i class="nav-icon fas fa-layer-group"  style="color: grey"></i>
+                <i class="<?php echo $row['icon']?>"  style="color: grey"></i>
                 <p >
                   <?php echo $row['nama_menu']?>
                   <?php if($row['have_child']== 1) { ?>
