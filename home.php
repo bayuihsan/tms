@@ -170,12 +170,23 @@ if($_SESSION['login_type'] != 1)
         <div class="col-md-6">
           <div class="row">
             <div class="col-12 col-sm-6 col-md-12">
-              <a style="float: right;font-size: 15px; margin-top: 15px;color: #3884e9" href="./index.php?page=task_list">See All</a> 
-              <h3>Task For Today </h3>
+              <a style="float: right;font-size: 15px; margin-top: 15px;color: #3884e9" id="seeAll" href="./index.php?page=task_list">See All</a> 
+              <h3 id="task">Task For Today </h3>
               <?php
+                $date = date('Y-m-d');
                 $i = -1;
                 // $type = array('',"Admin","Project Manager","Employee");
-                $qry = $conn->query("SELECT * FROM task_list limit 3");
+                $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
+                                      LEFT JOIN project_list b
+                                      ON a.`project_id` = b.id 
+                                      WHERE b.start_date = '".$date."' limit 3");
+                $valQry =$qry->fetch_assoc();
+                if ($valQry == null) {
+                  echo "<script>
+                        document.getElementById('seeAll').style.display = 'none';
+                        document.getElementById('task').style.display = 'none';
+                       </script>";
+                }
                 while($row= $qry->fetch_assoc()):
                 $i++;
                 ?>
@@ -184,16 +195,35 @@ if($_SESSION['login_type'] != 1)
                       <div class="col-sm" style="width: 100px" <?php echo 'id="marks'.$i.'"'; ?>>
                         
                       </div>
-                      <div class="col-sm-11">
-                      <div class="inner">
-                        <h3>s</h3>
-                        <p><?php echo $row['description']; ?></p>
+                      <div class="col-sm-10">
+                        <div class="inner" style="margin-top: 5px">
+                          <h5><strong><?php echo $row['name']; ?></strong></h5>
+                          <p><?php echo $row['description']; ?></p>
+                        </div>
+                        <span style="color: grey;font-size: 12px" >end date: <?php echo $row['end_date']; ?></span>
                       </div>
-                      <div class="icon">
-                        <!-- <p><?php echo $row['status']; ?></p> -->
-                        <i class="fa fa-tasks"></i>
+                      <div class="col-sm-1" >
+                        <!-- <div class="icon"> -->
+                          <!-- <p><?php echo $row['status']; ?></p> -->
+                          <!-- <i class="fa fa-check-circle"></i> -->
+                        <!-- </div> -->
                       </div>
-                    </div>
+                          <?php 
+                            if ($row['status'] == 3) {
+                              ?>
+                              <i style="margin-top: 25px;" class="fa fa-check-circle"></i>
+                              <?php
+                            }else if($row['status'] == 2){
+                              ?>
+                              <i style="margin-top: 25px;" class="fa fa-bars"></i>
+                              <?php
+                            }else{
+                              ?>
+                              <i style="margin-top: 25px;" class="fa fa-spinner"></i>
+                              <?php
+                            }
+                          ?>
+
                     </div>
                   </div>
               <?php endwhile; ?>
@@ -208,7 +238,7 @@ if($_SESSION['login_type'] != 1)
   var today = new Date();
   $('#date').html(`<span style="margin-top:-25px;position:absolute;">${today}</span>`)
    $(document).ready(function(){
-     var colors = ['#ff0000', '#00ff00', '#0000ff', '#f0ff00'];
+     var colors = ['#ff0000', '#00ff00', '#0000ff', '#FFFAF0', '#F0E68C'];
      for (var i = 0; i < 30; i++) {
      var random_color = colors[Math.floor(Math.random() * colors.length)];
      document.getElementById('marks'+i).style.background = random_color;
