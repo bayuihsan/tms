@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
    <!-- Select2 -->
   <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="assets/js/Chart.min.css">
   <link rel="stylesheet" href="assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
    <!-- SweetAlert2 -->
   <link rel="stylesheet" href="assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
@@ -43,6 +44,8 @@
   <!-- jQuery UI 1.11.4 -->
   <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
   <script src="assets/js/script.js"></script>
+  <script src="assets/js/Chart.min.js"></script>
+  <script src="https://www.google.com/jsapi"></script>
 
  <!-- summernote -->
   <link rel="stylesheet" href="assets/plugins/summernote/summernote-bs4.min.css">

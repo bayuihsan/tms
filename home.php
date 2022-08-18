@@ -171,7 +171,7 @@ if($_SESSION['login_type'] != 1)
           <div class="row">
             <div class="col-12 col-sm-6 col-md-12">
               <a style="float: right;font-size: 15px; margin-top: 15px;color: #3884e9" id="seeAll" href="./index.php?page=task_list">See All</a> 
-              <h3 id="task">Task For Today </h3>
+              <h4 id="task">Task For Today </h4>
               <?php
                 $date = date('Y-m-d');
                 $i = -1;
@@ -241,7 +241,7 @@ if($_SESSION['login_type'] != 1)
         <div class="col-md-4">
           <div class="row">
             <div class="col-12 col-sm-6 col-md-12">
-              <h3 id="task">Statistics Task</h3>
+              <h4 id="task">Statistics Task</h4>
             </div>
           </div>
           <div class="row">
@@ -273,12 +273,67 @@ if($_SESSION['login_type'] != 1)
                 </div>  
             </div>
           </div>
+
+           <div class="row">
+            <div class="col-12 col-sm-6 col-md-12">
+              <h4 id="task">Project Progress</h4>
+            </div>
+          </div>
+          <div class="row">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>                
+          </div>
         </div>
       </div>
+      <div id="d"></div>
 <script type="text/javascript">
   var today = new Date();
   $('#date').html(`<span style="margin-top:-25px;position:absolute;">${today}</span>`)
    $(document).ready(function(){
+    $.get("http://localhost:8080/tms/taskData.php",function(qry){
+      // alert(qry['JUMLAH_UNDONE'])
+      var isi_labels = ['On-Progress','Finished'];
+      var isi_data=[qry['JUMLAH_UNDONE'],qry['JUMLAH_DONE']];
+      var TotalJml = 0;
+      var ctx = document.getElementById('myChart').getContext('2d');
+
+      var myPieChart = new Chart(ctx, {
+          //chart akan ditampilkan sebagai pie chart
+          type: 'pie',
+          data: {
+              //membuat label chart
+              labels: isi_labels,
+              datasets: [{
+                  label: 'Data Task',
+                  //isi chart
+                  data: isi_data,
+                  //membuat warna pada chart
+                  backgroundColor: [
+                      '#CCE1D7',
+                      '#34A853'
+
+                  ],
+                  //borderWidth: 0, //this will hide border
+              }]
+          },
+          options: {
+              //konfigurasi tooltip
+              tooltips: {
+                  callbacks: {
+                      label: function(tooltipItem, data) {
+                          var dataset = data.datasets[tooltipItem.datasetIndex];
+                          var labels = data.labels[tooltipItem.index];
+                          var currentValue = dataset.data[tooltipItem.index];
+                          return labels+": "+currentValue+" %";
+                      }
+                  }
+              }
+            }
+      });
+    })
      var colors = ['#ff0000', '#00ff00', '#0000ff', '#FFFAF0', '#F0E68C','#e0ffcd','#fdffcd','#42b883'];
      for (var i = 0; i < 30; i++) {
      var random_color = colors[Math.floor(Math.random() * colors.length)];
