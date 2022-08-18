@@ -146,7 +146,7 @@ if($_SESSION['login_type'] != 1)
                   <p>Total Projects</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-layer-group"></i>
+                  <i class="fa fa-layer-group" style="color: #7fa99b"></i>
                 </div>
               </div>
             </div>
@@ -157,7 +157,7 @@ if($_SESSION['login_type'] != 1)
                   <p>Total Tasks</p>
                 </div>
                 <div class="icon">
-                  <i class="fa fa-tasks"></i>
+                  <i class="fa fa-tasks" style="color: #007bff"></i>
                 </div>
               </div>
             </div>
@@ -167,7 +167,7 @@ if($_SESSION['login_type'] != 1)
 
       <!-- dash task -->
       <div class="row" style="margin-left: 2px">
-        <div class="col-md-6">
+        <div class="col-md-7">
           <div class="row">
             <div class="col-12 col-sm-6 col-md-12">
               <a style="float: right;font-size: 15px; margin-top: 15px;color: #3884e9" id="seeAll" href="./index.php?page=task_list">See All</a> 
@@ -179,7 +179,9 @@ if($_SESSION['login_type'] != 1)
                 $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
                                       LEFT JOIN project_list b
                                       ON a.`project_id` = b.id 
-                                      WHERE b.start_date = '".$date."' limit 3");
+                                     -- WHERE b.start_date = '".$date."' 
+                                     $where
+                                      limit 3");
                 $valQry =$qry->fetch_assoc();
                 if ($valQry == null) {
                   echo "<script>
@@ -233,12 +235,51 @@ if($_SESSION['login_type'] != 1)
             
          </div>
         </div>
+        <div class="col-md-1">
+          
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-12">
+              <h3 id="task">Statistics Task</h3>
+            </div>
+          </div>
+          <div class="row">
+             <div class="col-6 col-sm-6 col-md-6">
+                 <div class="small-box bg-light shadow-sm border">
+                    <div class="inner">
+                      <h3><?php echo $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
+                                                  LEFT JOIN project_list b
+                                                  ON a.`project_id` = b.id WHERE a.status = 2 $where")->num_rows; ?></h3>
+                      <p>On Progress</p>
+                    </div>
+                  <div class="icon">
+                    <i class="fa fa-bars" style="color: #17a2b8"></i>
+                  </div>
+                </div>  
+              <!-- </div> -->
+            </div>
+             <div class="col-6 col-sm-6 col-md-6">
+                 <div class="small-box bg-light shadow-sm border">
+                    <div class="inner">
+                      <h3><?php echo $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
+                                                  LEFT JOIN project_list b
+                                                  ON a.`project_id` = b.id WHERE a.status = 3 $where")->num_rows; ?></h3>
+                      <p>Finished</p>
+                    </div>
+                  <div class="icon">
+                    <i class="fa fa-check-circle" style="color: green"></i>
+                  </div>
+                </div>  
+            </div>
+          </div>
+        </div>
       </div>
 <script type="text/javascript">
   var today = new Date();
   $('#date').html(`<span style="margin-top:-25px;position:absolute;">${today}</span>`)
    $(document).ready(function(){
-     var colors = ['#ff0000', '#00ff00', '#0000ff', '#FFFAF0', '#F0E68C'];
+     var colors = ['#ff0000', '#00ff00', '#0000ff', '#FFFAF0', '#F0E68C','#e0ffcd','#fdffcd','#42b883'];
      for (var i = 0; i < 30; i++) {
      var random_color = colors[Math.floor(Math.random() * colors.length)];
      document.getElementById('marks'+i).style.background = random_color;
