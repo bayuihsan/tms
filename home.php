@@ -46,7 +46,7 @@ if($_SESSION['login_type'] != 1)
           if ($i==1) {
             $warna = '#016738';
           }else if($i==2){
-            $warna = '#F8931D';
+            $warna = '#876445';
           }
           else{
             $warna = '#1877F2';
@@ -83,10 +83,19 @@ if($_SESSION['login_type'] != 1)
                     </h4>
                   </div>
                 </div>
-                 <div class="row">
+                 <div class="row" style="margin-top: 20px">
                    <div class="col-sm-10">
-                    <p style="margin-top: 40px;margin-left: 10px;font-size: 15px"><strong><?php echo $row['JUMLAH'] ?> Task | <?php echo $row['end_date'] ?></strong></p>
-                   <!-- <span><strong><?php echo $row['JUMLAH'] ?></strong></span> -->
+                    <p style="font-size: 15px;margin-left: 10px;"><strong><?php echo $row['JUMLAH'] ?> Task | <?php echo $row['end_date'] ?></strong></p>
+                  </div>
+                </div>
+                 <div class="row" style="margin-top: -15px;">
+                   <div class="col-sm-10">
+                    <p><progress id="file" <?php echo "max='".$row['JUMLAH']."'"; ?> 
+                    <?php echo "value='".$conn->query("SELECT * FROM task_list 
+                                                      WHERE `status` = 3 AND project_id = '".$row['project_id']."'")->num_rows."'";
+                     ?> style="margin-left: 10px;">
+                       </progress>
+                     </p>
                   </div>
                 </div>
                  <?php $i++;?>
@@ -135,10 +144,7 @@ if($_SESSION['login_type'] != 1)
                         <span style="color: grey;font-size: 12px" >end date: <?php echo $row['end_date']; ?></span>
                       </div>
                       <div class="col-sm-1" >
-                        <!-- <div class="icon"> -->
-                          <!-- <p><?php echo $row['status']; ?></p> -->
-                          <!-- <i class="fa fa-check-circle"></i> -->
-                        <!-- </div> -->
+                      
                       </div>
                           <?php 
                             if ($row['status'] == 3) {
@@ -276,4 +282,5 @@ if($_SESSION['login_type'] != 1)
     flex: 0 0 8.333333% !important;
     max-width: 0.333333% !important;
 }
+
 </style>
