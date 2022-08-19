@@ -5,7 +5,7 @@ if($_SESSION['login_type'] != 1)
   $twhere = " ";
 ?>
 <!-- Info boxes -->
- <div class="col-12" id="date" style="margin-left: -5px">
+<?php /*<div class="col-12" id="date" style="margin-left: -5px">
 
 </div>
  <div class="col-12" style="padding-top: 10px;margin-left: -5px">
@@ -15,6 +15,7 @@ if($_SESSION['login_type'] != 1)
             </div>
           </div>
   </div>
+*/?>
   <hr>
   <?php 
 
@@ -126,10 +127,10 @@ if($_SESSION['login_type'] != 1)
       </div>
 
       <!-- dash task -->
-      <div class="row" style="margin-left: 2px">
+      <div class="row">
         <div class="col-md-7">
           <div class="row">
-            <div class="col-12 col-sm-6 col-md-12">
+            <div class="col-12 col-sm-6 col-md-11">
               <a style="float: right;font-size: 15px; margin-top: 15px;color: #3884e9" id="seeAll" href="./index.php?page=task_list">See All</a> 
               <h4 id="task">Task For Today </h4>
               <?php
@@ -140,7 +141,7 @@ if($_SESSION['login_type'] != 1)
                                       LEFT JOIN project_list b
                                       ON a.`project_id` = b.id 
                                       WHERE b.start_date = '".$date."' 
-                                     
+                                      order by b.start_date desc
                                       limit 3");
                 $valQry =$qry->fetch_assoc();
                 if ($valQry == null) {
@@ -192,10 +193,7 @@ if($_SESSION['login_type'] != 1)
             
          </div>
         </div>
-        <div class="col-md-1">
-          
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
           <div class="row">
             <div class="col-12 col-sm-6 col-md-12" >
               <h4 id="task">Statistics Task</h4>
@@ -208,37 +206,40 @@ if($_SESSION['login_type'] != 1)
                       <h3><?php echo $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
                                                   LEFT JOIN project_list b
                                                   ON a.`project_id` = b.id WHERE a.status = 2")->num_rows; ?></h3>
-                      <p>On Progress</p>
+                      <p>On Progress Task</p>
                     </div>
                   <div class="icon">
                   </div>
                 </div>  
             </div>
-             <div class="col-6 col-sm-6 col-md-6">
-                 <div class="small-box shadow-sm border"  style="border-radius: 10px;background-color: white">
-                    <div class="inner">
-                      <h3><?php echo $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
-                                                  LEFT JOIN project_list b
-                                                  ON a.`project_id` = b.id WHERE a.status = 3")->num_rows; ?></h3>
-                      <p>Finished</p>
-                    </div>
+            <div class="col-6 col-sm-6 col-md-6">
+                <div class="small-box shadow-sm border"  style="border-radius: 10px;background-color: white">
+                  <div class="inner">
+                    <h3><?php echo $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
+                                                LEFT JOIN project_list b
+                                                ON a.`project_id` = b.id WHERE a.status = 3")->num_rows; ?></h3>
+                    <p>Finished Task</p>
+                  </div>
                   <div class="icon">
                   </div>
                 </div>  
             </div>
           </div>
 
-           <div class="row">
+          <div class="row">
             <div class="col-12 col-sm-6 col-md-12">
               <h4 id="task">Project Progress</h4>
             </div>
           </div>
           <div class="row">
-                <div class="panel panel-primary">
-                    <div class="panel-body">
-                        <canvas id="myChart"></canvas>
-                    </div>
-                </div>                
+            <div class="col-12 col-sm-6 col-md-11">
+              <div class="panel panel-primary">
+                  <div class="panel-body">
+                      <canvas id="myChart"></canvas>
+                  </div>
+              </div>
+            </div>
+                            
           </div>
         </div>
       </div>
@@ -247,9 +248,10 @@ if($_SESSION['login_type'] != 1)
   var today = new Date();
   $('#date').html(`<span style="margin-top:-25px;position:absolute;">${today}</span>`)
    $(document).ready(function(){
-    $.get("http://localhost:8080/tms/taskData.php",function(qry){
+    // $.get("http://localhost:8080/tms/taskData.php",function(qry){
+    $.get("http://localhost/tms/taskData.php",function(qry){
       // alert(qry['JUMLAH_UNDONE'])
-      var isi_labels = ['On-Progress','Finished'];
+      var isi_labels = ['In Progress','Completed'];
       var isi_data=[qry['JUMLAH_UNDONE'],qry['JUMLAH_DONE']];
       var TotalJml = 0;
       var ctx = document.getElementById('myChart').getContext('2d');

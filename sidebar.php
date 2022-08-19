@@ -1,13 +1,5 @@
   <aside class="main-sidebar  elevation-4">
     <div class="dropdown">
-   	<!-- <a href="./" class="brand-link">
-        <?php if($_SESSION['login_type'] == 1): ?>
-        <h3 class="text-center p-0 m-0"><b>ADMIN</b></h3>
-        <?php else: ?>
-        <h3 class="text-center p-0 m-0"><b>USER</b></h3>
-        <?php endif; ?>
-
-    </a> -->
     <img src="assets/images/loginv1.png" height="61px" width="192px" style="margin-left: 10%;position: absolute;margin-top: 10%">
     <?php
     if($_SESSION['login_id']){

@@ -43,7 +43,7 @@
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
-  <script src="assets/js/script.js"></script>
+  <!-- <script src="assets/js/script.js"></script> -->
   <script src="assets/js/Chart.min.js"></script>
   <script src="https://www.google.com/jsapi"></script>
 

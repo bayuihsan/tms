@@ -34,7 +34,9 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"><?php echo $title ?></h1>
+            <!-- <h1 class="m-0"><?php echo $title ?></h1> -->
+            <h1 class="m-0"><?php if($title=='Home'){ echo "Hi, ".$_SESSION['login_name']."!"; }else{ echo $title; } ?></h1>
+            <h6><?php echo date('l, d M Y')?></h6>
           </div><!-- /.col -->
 
         </div><!-- /.row -->
