@@ -29,6 +29,14 @@
                                     <label for="end_datetime" class="control-label">End</label>
                                     <input type="datetime-local" class="form-control form-control-sm rounded-0" name="end_datetime" id="end_datetime" required>
                                 </div>
+                                <div class="form-group mb-2">
+                                    <label for="title" class="control-label">Status</label>
+                                    <select class="form-group">
+                                        <option value="1">Pending</option>
+                                        <option value="2">Progress</option>
+                                        <option value="3">Done</option>
+                                    </select>
+                                </div>
                                 <div class="form-group mb-2" style="display: none">
                                     <label for="id_user" class="control-label">id_user</label>
                                     <input type="text" class="form-control form-control-sm rounded-0" name="id_user" id="id_user" 
