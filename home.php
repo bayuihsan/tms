@@ -38,7 +38,7 @@ if($_SESSION['login_type'] != 1)
               $qry = $conn->query("SELECT task_list.*,project_list.*,
                                     COUNT(project_id) AS JUMLAH
                                     FROM task_list INNER JOIN project_list 
-                                    ON task_list.`project_id` = project_list.`id` $where
+                                    ON task_list.`project_id` = project_list.`id` 
                                     GROUP BY task_list.project_id
                                     LIMIT 3");
               while($row= $qry->fetch_assoc()):
@@ -52,7 +52,7 @@ if($_SESSION['login_type'] != 1)
             $warna = '#1877F2';
           }
           ?>
-          <div class="small-box shadow-sm border" style="height: 15rem;width: 24rem;margin-right: 30px;margin-left: 10px;background-color: <?php echo $warna; ?>;color: white;border-radius: 10px;" 
+          <div class="small-box shadow-sm border" style="height: 15rem;width: 23rem;margin-right: 30px;margin-left: 10px;background-color: <?php echo $warna; ?>;color: white;border-radius: 10px;" 
            <?php echo 'id="datas'.$i.'"'; ?>>
                 <div class="row">
                   <div class="col-sm-10">
@@ -97,7 +97,14 @@ if($_SESSION['login_type'] != 1)
                     </h4>
                   </div>
                 </div>
-                 <div class="row" style="margin-top: 20px">
+                <?php
+                if (count($name)<=1) {
+                  $margin = '65px';
+                }else{
+                  $margin = '30px';
+                }
+                ?>
+                 <div class="row" style="margin-top: <?php echo $margin; ?>">
                    <div class="col-sm-10">
                     <p style="font-size: 15px;margin-left: 10px;"><strong><?php echo $row['JUMLAH'] ?> Task | <?php echo $row['end_date'] ?></strong></p>
                   </div>
@@ -106,7 +113,7 @@ if($_SESSION['login_type'] != 1)
                    <div class="col-sm-10">
                     <p><progress id="file" <?php echo "max='".$row['JUMLAH']."'"; ?> 
                     <?php echo "value='".$conn->query("SELECT * FROM task_list 
-                                                      WHERE `status` = 3 AND project_id = '".$row['project_id']."' $where")->num_rows."'";
+                                                      WHERE `status` = 3 AND project_id = '".$row['project_id']."' ")->num_rows."'";
                      ?> style="margin-left: 10px;">
                        </progress>
                      </p>
@@ -132,8 +139,8 @@ if($_SESSION['login_type'] != 1)
                 $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
                                       LEFT JOIN project_list b
                                       ON a.`project_id` = b.id 
-                                     -- WHERE b.start_date = '".$date."' 
-                                     $where
+                                      WHERE b.start_date = '".$date."' 
+                                     
                                       limit 3");
                 $valQry =$qry->fetch_assoc();
                 if ($valQry == null) {

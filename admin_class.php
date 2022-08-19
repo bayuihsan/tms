@@ -102,7 +102,6 @@ Class Action {
 			if ($id_menu == 2) {
 				$save = $this->db->query("INSERT tabel_role (id_menu, id_tabel_role) values 
 					('2', '".$id_tabel_role."' ),
-					('3', '".$id_tabel_role."' ),
 					('4', '".$id_tabel_role."' ) ");
 				
 			}else if ($id_menu == 6) {
