@@ -34,6 +34,7 @@ if($_SESSION['login_type'] != 1)
     ?>
         
       <div class="row">
+        
          <?php
          $i=1;
               $qry = $conn->query("SELECT task_list.*,project_list.*,
