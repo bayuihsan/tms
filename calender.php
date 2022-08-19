@@ -1,7 +1,7 @@
 <?php include'db_connect.php' ?>
     <div class="container py-5" id="page-container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9" style="background-color: #FFCB42">
                 <div id="calendar"></div>
             </div>
             <div class="col-md-3">
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="title" class="control-label">Status</label>
-                                    <select class="form-group">
+                                    <select class="form-control" id="status" name="status">
                                         <option value="1">Pending</option>
                                         <option value="2">Progress</option>
                                         <option value="3">Done</option>
@@ -74,6 +74,8 @@
                             <dd id="start" class=""></dd>
                             <dt class="text-muted">End</dt>
                             <dd id="end" class=""></dd>
+                            <dt class="text-muted">Status</dt>
+                            <dd id="status" class="fw-bold fs-4"></dd>
                         </dl>
                     </div>
                 </div>
@@ -118,9 +120,12 @@ if(isset($conn)) $conn->close();
             })
         }
         var date = new Date()
+       
         var d = date.getDate(),
             m = date.getMonth(),
             y = date.getFullYear()
+
+
 
         calendar = new Calendar(document.getElementById('calendar'), {
             headerToolbar: {
@@ -135,11 +140,19 @@ if(isset($conn)) $conn->close();
             eventClick: function(info) {
                 var _details = $('#event-details-modal')
                 var id = info.event.id
+                if (scheds[id].status == '1') {
+                    scheds[id].status = 'Pending';
+                    }else if(scheds[id].status == '2'){
+                    scheds[id].status = 'Progress';
+                    }else{
+                    scheds[id].status = 'Done';
+                    }
                 if (!!scheds[id]) {
                     _details.find('#title').text(scheds[id].title)
                     _details.find('#description').text(scheds[id].description)
                     _details.find('#start').text(scheds[id].sdate)
                     _details.find('#end').text(scheds[id].edate)
+                    _details.find('#status').text(scheds[id].status)
                     _details.find('#edit,#delete').attr('data-id', id)
                     _details.modal('show')
                 } else {
@@ -164,13 +177,21 @@ if(isset($conn)) $conn->close();
         $('#edit').click(function() {
             var id = $(this).attr('data-id')
             if (!!scheds[id]) {
-                var _form = $('#schedule-form')
+                var _form = $('#schedule-form');
+                if (scheds[id].status == 'Pending') {
+                    scheds[id].status = '1';
+                    }else if(scheds[id].status == 'Progress'){
+                    scheds[id].status = '2';
+                    }else{
+                    scheds[id].status = '3';
+                    }
                 console.log(String(scheds[id].start_datetime), String(scheds[id].start_datetime).replace(" ", "\\t"))
                 _form.find('[name="id"]').val(id)
                 _form.find('[name="title"]').val(scheds[id].title)
                 _form.find('[name="description"]').val(scheds[id].description)
                 _form.find('[name="start_datetime"]').val(String(scheds[id].start_datetime).replace(" ", "T"))
                 _form.find('[name="end_datetime"]').val(String(scheds[id].end_datetime).replace(" ", "T"))
+                _form.find('[name="status"]').val(scheds[id].status)
                 $('#event-details-modal').modal('hide')
                 _form.find('[name="title"]').focus()
             } else {

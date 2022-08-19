@@ -10,9 +10,9 @@ extract($_POST);
 $allday = isset($allday);
 
 if(empty($id)){
-    $sql = "INSERT INTO `schedule_list` (`title`,`description`,`start_datetime`,`end_datetime`, `id_user`) VALUES ('$title','$description','$start_datetime','$end_datetime', '$id_user')";
+    $sql = "INSERT INTO `schedule_list` (`title`,`description`,`start_datetime`,`end_datetime`, `id_user`, `status`) VALUES ('$title','$description','$start_datetime','$end_datetime', '$id_user',$status)";
 }else{
-    $sql = "UPDATE `schedule_list` set `title` = '{$title}', `description` = '{$description}', `start_datetime` = '{$start_datetime}', `end_datetime` = '{$end_datetime}', `id_user` = '{$id_user}' where `id` = '{$id}'";
+    $sql = "UPDATE `schedule_list` set `title` = '{$title}', `description` = '{$description}', `start_datetime` = '{$start_datetime}', `end_datetime` = '{$end_datetime}', `id_user` = '{$id_user}', `status` = '{$status}' where `id` = '{$id}'";
 }
 $save = $conn->query($sql);
 if($save){
