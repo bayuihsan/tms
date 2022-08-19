@@ -9,7 +9,7 @@ foreach($user->fetch_array() as $k =>$v){
 ?>
 <?php
 ?>
-  <nav class="main-header navbar navbar-expand" style="background-color: ">
+  <nav class="main-header navbar navbar-expand" style="background-color:white" id="topnav_">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <?php if(isset($_SESSION['login_id'])): ?>
@@ -52,3 +52,8 @@ foreach($user->fetch_array() as $k =>$v){
       })
      // <?php echo "";?>
   </script>
+  <style type="text/css">
+    #topnav_ a:hover{
+      background-color: white !important; 
+    }
+  </style>

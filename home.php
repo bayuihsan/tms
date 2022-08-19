@@ -48,10 +48,10 @@ if($_SESSION['login_type'] != 1)
           if ($i==1) {
             $warna = '#016738';
           }else if($i==2){
-            $warna = '#876445';
+            $warna = '#1345AB';
           }
           else{
-            $warna = '#1877F2';
+            $warna = '#F36306';
           }
           ?>
           <div class="small-box shadow-sm border" style="height: 15rem;width: 23rem;margin-right: 30px;margin-left: 10px;background-color: <?php echo $warna; ?>;color: white;border-radius: 10px;" 
@@ -144,7 +144,13 @@ if($_SESSION['login_type'] != 1)
                                       WHERE b.start_date = '".$date."' 
                                       order by b.start_date desc
                                       limit 3");
-                $valQry =$qry->fetch_assoc();
+                 $qry1 = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
+                                      LEFT JOIN project_list b
+                                      ON a.`project_id` = b.id 
+                                      WHERE b.start_date = '".$date."' 
+                                      order by b.start_date desc
+                                      limit 3");
+                $valQry =$qry1->fetch_assoc();
                 if ($valQry == null) {
                   echo "<script>
                         document.getElementById('seeAll').style.display = 'none';
@@ -156,9 +162,27 @@ if($_SESSION['login_type'] != 1)
                 ?>
                   <div class="small-box shadow-sm border"  style="border-radius: 10px;background-color: white">
                     <div class="row">
-                      <div class="col-sm" style="width: 100px" <?php echo 'id="marks'.$i.'"'; ?>>
-                        
-                      </div>
+                        <?php 
+                          if ($row['status'] == 3) {
+                            ?>
+                            <div class="col-sm" style="width: 100px;background-color: green">
+                               <P></P>
+                           </div>
+                            <?php
+                          }else if($row['status'] == 2){
+                            ?>
+                            <div class="col-sm" style="width: 100px;background-color: orange">
+                               <P></P>
+                            </div>
+                            <?php
+                          }else{
+                            ?>
+                            <div class="col-sm" style="width: 100px;background-color: grey">
+                               <P></P>
+                            </div>
+                            <?php
+                          }
+                        ?>
                       <div class="col-sm-10">
                         <div class="inner" style="margin-top: 5px" >
                           <h5><strong><?php echo $row['name']; ?></strong></h5>
@@ -172,15 +196,15 @@ if($_SESSION['login_type'] != 1)
                           <?php 
                             if ($row['status'] == 3) {
                               ?>
-                              <i style="margin-top: 25px;" class="fa fa-check-circle"></i>
+                              <i style="margin-top: 25px;color: green" class="fa fa-check-circle"></i>
                               <?php
                             }else if($row['status'] == 2){
                               ?>
-                              <i style="margin-top: 25px;" class="fa fa-bars"></i>
+                              <i style="margin-top: 25px;color: orange" class="fa fa-bars"></i>
                               <?php
                             }else{
                               ?>
-                              <i style="margin-top: 25px;" class="fa fa-spinner"></i>
+                              <i style="margin-top: 25px;color: grey" class="fa fa-spinner"></i>
                               <?php
                             }
                           ?>
@@ -249,8 +273,8 @@ if($_SESSION['login_type'] != 1)
   var today = new Date();
   $('#date').html(`<span style="margin-top:-25px;position:absolute;">${today}</span>`)
    $(document).ready(function(){
-    // $.get("http://localhost:8080/tms/taskData.php",function(qry){
-    $.get("http://localhost/tms/taskData.php",function(qry){
+    $.get("http://localhost:8080/tms/taskData.php",function(qry){
+    // $.get("http://localhost/tms/taskData.php",function(qry){
       // alert(qry['JUMLAH_UNDONE'])
       var isi_labels = ['In Progress','Completed'];
       var isi_data=[qry['JUMLAH_UNDONE'],qry['JUMLAH_DONE']];
