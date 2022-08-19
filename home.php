@@ -58,15 +58,29 @@ if($_SESSION['login_type'] != 1)
                   <div class="col-sm-10">
                     <div class="inner"  style="padding-left: 10px">
                       <a href="./index.php?page=view_project&id=<?php echo $row['id'] ?>" class="fa fa-bars" style="float: right !important;margin-right: -50px;margin-top: 10px;text-decoration: none;background-color: transparent;color: white"></a>
-                      <h3><?php echo $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
-                                                  LEFT JOIN project_list b
-                                                  ON a.`project_id` = b.id WHERE a.status = 2 $where")->num_rows; ?></h3>
+                        <span class="mr-2" style="color: grey">
+                          <?php
+                          // $qry = $conn->query("SELECT avatar FROM `users` WHERE id = '".$id[$i]."'");
+                          $ids = explode(",", $row['user_ids']);
+                          // echo count($ids);
+                          for ($z=0; $z <count($ids) ; $z++) { 
+                              // echo $z;
+                              $user = $conn->query("SELECT avatar FROM users where id ='".$ids[$z]."'");
+                              foreach($user->fetch_array() as $k =>$v){
+                                $meta[$k] = $v;
+                                   }
+                            ?>
+                            <img <?php echo 'id="ava'.$z.'"'; ?> src="<?php echo isset($meta['avatar']) ? 'assets/uploads/'.$meta['avatar'] :'' ?>" height="50px" width="55px"
+                           style="border-radius: 100% 100%;margin-top: 10px">
+                          <?php $z=$z; }?>
+                           
+                        </span>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                    <div class="col-sm-10">
-                    <h4 style="margin-top: 40px;margin-left: 10px">
+                    <h4 style="margin-top: 30px;margin-left: 10px">
                       <strong>
                         <?php $name = explode(" ",$row['name']) ;
                          echo $name[0];
@@ -92,7 +106,7 @@ if($_SESSION['login_type'] != 1)
                    <div class="col-sm-10">
                     <p><progress id="file" <?php echo "max='".$row['JUMLAH']."'"; ?> 
                     <?php echo "value='".$conn->query("SELECT * FROM task_list 
-                                                      WHERE `status` = 3 AND project_id = '".$row['project_id']."'")->num_rows."'";
+                                                      WHERE `status` = 3 AND project_id = '".$row['project_id']."' $where")->num_rows."'";
                      ?> style="margin-left: 10px;">
                        </progress>
                      </p>
@@ -273,6 +287,9 @@ if($_SESSION['login_type'] != 1)
      document.getElementById('marks'+i).style.background = random_color;
 
      }
+   
+
+
     })
 </script>
 <style type="text/css">
@@ -282,5 +299,19 @@ if($_SESSION['login_type'] != 1)
     flex: 0 0 8.333333% !important;
     max-width: 0.333333% !important;
 }
+#ava0{
+         position: relative;
+         top: 0;
+         left: 0;
+}
+#ava1{
+         position: absolute;
+         left: 60px;
+}
+#ava2{
+         position: absolute;
+         left: 100px;
+}
+
 
 </style>
