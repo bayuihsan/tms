@@ -93,11 +93,11 @@
 // var_dump($_SESSION['login_id']);
 $schedules = $conn->query("SELECT * FROM `schedule_list` where id_user = '".$_SESSION['login_id']."'");
 $sched_res = [];
-foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
+while($row= $schedules->fetch_assoc()):
     $row['sdate'] = date("F d, Y h:i A",strtotime($row['start_datetime']));
     $row['edate'] = date("F d, Y h:i A",strtotime($row['end_datetime']));
     $sched_res[$row['id']] = $row;
-}
+endwhile;
 ?>
 <?php 
 if(isset($conn)) $conn->close();
