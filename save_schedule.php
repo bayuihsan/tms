@@ -6,7 +6,7 @@ if($_SERVER['REQUEST_METHOD'] !='POST'){
     exit;
 }
 extract($_POST);
-echo json_encode($_POST);die();
+// echo json_encode($_POST);die();
 $allday = isset($allday);
 
 if(empty($id)){
