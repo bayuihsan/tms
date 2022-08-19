@@ -173,6 +173,8 @@ Class Action {
 
 	function update_user(){
 		extract($_POST);
+		// die();
+		
 		$data = "";
 		foreach($_POST as $k => $v){
 			if(!in_array($k, array('id','cpass','table','password')) && !is_numeric($k)){

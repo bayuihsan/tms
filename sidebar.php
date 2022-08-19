@@ -1,4 +1,3 @@
-<?php include'db_connect.php' ?>
   <aside class="main-sidebar  elevation-4">
     <div class="dropdown">
    	<!-- <a href="./" class="brand-link">
@@ -10,7 +9,14 @@
 
     </a> -->
     <img src="assets/images/loginv1.png" height="61px" width="192px" style="margin-left: 10%;position: absolute;margin-top: 10%">
-
+    <?php
+    if($_SESSION['login_id']){
+      $user = $conn->query("SELECT * FROM users where id =".$_SESSION['login_id']);
+      foreach($user->fetch_array() as $k =>$v){
+        $meta[$k] = $v;
+      }
+    }
+    ?>
     </div>
     <div class="sidebar pb-4 mb-4" style="margin-top: 40%;" id="sidebar">
       <nav class="mt-2">
@@ -36,7 +42,7 @@
         ?>
             <li class="nav-item">
               <a href="<?php echo $row['url']?>" class="nav-link nav-edit_project nav-<?php echo $row['page']?>" tree-item>
-                <i class="<?php echo $row['icon']?>"  style="color: grey"></i>
+                <i class="<?php echo $row['icon']?>"  style="color: <?php '"'.$meta['colorSchema'].'"'?>"></i>
                 <p >
                   <?php echo $row['nama_menu']?>
                   <?php if($row['have_child']== 1) { ?>
@@ -88,12 +94,19 @@
   		}
      
   	})
+    var my_css_class = { backgroundColor : 'white', color : <?php echo '"'.$meta['colorSchema'].'"' ?> };
+    $('.nav-item > .nav-link').css(my_css_class);
+    $("a").hover(function(){
+      $(this).css("background-color", <?php echo '"'.$meta['colorSchema'].'"' ?>);
+      }, function(){
+      $(this).css("background-color", "white");
+    });
   </script>
 
   <style type="text/css">
     .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
       background-color: white;
-      color: #800000;
+      color: #800000 !important;
     }
 
     #sidebar a:hover{

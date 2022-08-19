@@ -200,7 +200,7 @@ if($_SESSION['login_type'] != 1)
                     <div class="inner">
                       <h3><?php echo $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
                                                   LEFT JOIN project_list b
-                                                  ON a.`project_id` = b.id WHERE a.status = 2 $where")->num_rows; ?></h3>
+                                                  ON a.`project_id` = b.id WHERE a.status = 2")->num_rows; ?></h3>
                       <p>On Progress</p>
                     </div>
                   <div class="icon">
@@ -212,7 +212,7 @@ if($_SESSION['login_type'] != 1)
                     <div class="inner">
                       <h3><?php echo $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
                                                   LEFT JOIN project_list b
-                                                  ON a.`project_id` = b.id WHERE a.status = 3 $where")->num_rows; ?></h3>
+                                                  ON a.`project_id` = b.id WHERE a.status = 3")->num_rows; ?></h3>
                       <p>Finished</p>
                     </div>
                   <div class="icon">

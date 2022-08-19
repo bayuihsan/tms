@@ -1,14 +1,24 @@
 <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand">
+<?php
+if($_SESSION['login_id']){
+$user = $conn->query("SELECT * FROM users where id =".$_SESSION['login_id']);
+foreach($user->fetch_array() as $k =>$v){
+  $meta[$k] = $v;
+}
+}
+?>
+<?php
+?>
+  <nav class="main-header navbar navbar-expand" style="background-color: ">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <?php if(isset($_SESSION['login_id'])): ?>
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="" role="button"></a>
+        <!-- <a class="nav-link" data-widget="pushmenu" href="" role="button"></a> -->
       </li>
     <?php endif; ?>
       <li>
-        <a class="nav-link text-white"  href="./" role="button"> <large><b><?php echo $_SESSION['system']['name'] ?></b></large></a>
+        <a class="nav-link text-black"  href="./" role="button" style="text-decoration: none;color: <?php echo $meta['colorSchema']?>"> <large><b><?php echo $_SESSION['system']['name'] ?></b></large></a>
       </li>
     </ul>
 
@@ -40,4 +50,5 @@
      $('#manage_account').click(function(){
         uni_modal('Manage Account','manage_user.php?id=<?php echo $_SESSION['login_id'] ?>')
       })
+     // <?php echo "";?>
   </script>
