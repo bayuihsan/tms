@@ -320,6 +320,7 @@ Class Action {
 	}
 	function save_task(){
 		extract($_POST);
+		// var_dump($_POST);die();
 		$data = "";
 		foreach($_POST as $k => $v){
 			if(!in_array($k, array('id')) && !is_numeric($k)){
@@ -337,6 +338,14 @@ Class Action {
 		}else{
 			$save = $this->db->query("UPDATE task_list set $data where id = $id");
 		}
+		if($save){
+			return 1;
+		}
+	}
+	function add_task(){
+		extract($_POST);
+		$save = $this->db->query("INSERT task_list (project_id, task, description, status) 
+	 							values ('".$project_id."', '".$task."', '".$description."','".$status."' )");
 		if($save){
 			return 1;
 		}

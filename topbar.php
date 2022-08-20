@@ -48,7 +48,7 @@ foreach($user->fetch_array() as $k =>$v){
   <!-- /.navbar -->
   <script>
      $('#manage_account').click(function(){
-        uni_modal('Manage Account','manage_user.php?id=<?php echo $_SESSION['login_id'] ?>')
+        uni_modal('Manage Account','manage_user.php?id=<?php echo $_SESSION['login_id'] ?>',"mid-large")
       })
      // <?php echo "";?>
   </script>

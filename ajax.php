@@ -81,6 +81,11 @@ if($action == 'save_task'){
 	if($save)
 		echo $save;
 }
+if($action == 'add_task'){
+	$save = $crud->add_task();
+	if($save)
+		echo $save;
+}
 if($action == 'delete_task'){
 	$save = $crud->delete_task();
 	if($save)

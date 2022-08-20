@@ -1,4 +1,28 @@
-<?php include'db_connect.php' ?>
+<?php 
+include'db_connect.php';
+
+$stat = array("Pending","Started","On-Progress","On-Hold","Over Due","Done");
+$qry = $conn->query("SELECT * FROM project_list where id = 3")->fetch_array();
+foreach($qry as $k => $v){
+	$$k = $v;
+}
+$tprog = $conn->query("SELECT * FROM task_list where project_id = {$id}")->num_rows;
+$cprog = $conn->query("SELECT * FROM task_list where project_id = {$id} and status = 3")->num_rows;
+$prog = $tprog > 0 ? ($cprog/$tprog) * 100 : 0;
+$prog = $prog > 0 ?  number_format($prog,2) : $prog;
+$prod = $conn->query("SELECT * FROM user_productivity where project_id = {$id}")->num_rows;
+if($status == 0 && strtotime(date('Y-m-d')) >= strtotime($start_date)):
+if($prod  > 0  || $cprog > 0)
+  $status = 2;
+else
+  $status = 1;
+elseif($status == 0 && strtotime(date('Y-m-d')) > strtotime($end_date)):
+$status = 4;
+endif;
+$manager = $conn->query("SELECT *,concat(firstname,' ',lastname) as name FROM users where id = $manager_id");
+$manager = $manager->num_rows > 0 ? $manager->fetch_array() : array();
+
+ ?>
 <div class="col-lg-12">
 	<div class="card card-outline card-success">
 		<!-- <div class="card-header">
@@ -9,7 +33,8 @@
 		<div class="card-body">
 			<div class="row">
 				<div class="col-sm-1">
-					<a class="btn btn-block btn-sm btn-default btn-flat" style="border-radius: 8px" href="./index.php?page=new_project">Add New <i class="fa fa-plus" style="color: white;background-color: #800000;"></i></a>
+				<!-- 	<a class="btn btn-block btn-sm btn-default btn-flat" style="border-radius: 8px" href="./index.php?page=new_project">Add New <i class="fa fa-plus" style="color: white;background-color: #800000;"></i></a> -->
+					<a class="btn btn-block btn-sm btn-default btn-flat" style="border-radius: 8px" id="new_task">Add New <i class="fa fa-plus" style="color: white;background-color: #800000;"></i></a>
 				</div>
 			</div>
 			<table class="table tabe-hover table-condensed" id="list">
@@ -122,6 +147,7 @@
 		</div>
 	</div>
 </div>
+
 <style>
 	table p{
 		margin: unset !important;
@@ -141,6 +167,9 @@
 		})
 	$('.new_productivity').click(function(){
 		uni_modal("<i class='fa fa-plus'></i> New Progress for: "+$(this).attr('data-task'),"manage_progress.php?pid="+$(this).attr('data-pid')+"&tid="+$(this).attr('data-tid'),'large')
+	})
+	$('#new_task').click(function(){
+		uni_modal("New Task","new_task.php","mid-large")
 	})
 	})
 	function delete_project($id){

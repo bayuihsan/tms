@@ -115,8 +115,15 @@ if(isset($conn)) $conn->close();
     $(function() {
         if (!!scheds) {
             Object.keys(scheds).map(k => {
-                var row = scheds[k]
-                events.push({ id: row.id, title: row.title, start: row.start_datetime, end: row.end_datetime });
+                var row = scheds[k];
+                if (row.status == 3) {
+                    status = '(Done)';
+                }else if(row.status == 2){
+                    status = '(On-Progress)';
+                }else{
+                    status = '(Pending)';
+                }
+                events.push({ id: row.status,id: row.id, title: row.title+' '+status, start: row.start_datetime, end: row.end_datetime });
             })
         }
         var date = new Date()
@@ -130,9 +137,10 @@ if(isset($conn)) $conn->close();
         calendar = new Calendar(document.getElementById('calendar'), {
             headerToolbar: {
                 left: 'prev,next today',
-                right: 'dayGridMonth,dayGridWeek,list',
+                right: '',
                 center: 'title',
             },
+
             selectable: true,
             themeSystem: 'bootstrap',
             //Random default events
@@ -198,16 +206,44 @@ if(isset($conn)) $conn->close();
                 alert("Event is undefined");
             }
         })
+        
 
        
     })
 </script>
 <script type="text/javascript">
-     // $(document).ready(function(){
+     $(document).ready(function(){
       $('#delete').click(function(){
       _conf("Are you sure to delete this schedule?","delete_schedule",[$(this).attr('data-id')])
       })
-      // })
+      // $('.fc-daygrid-event-harness')
+       var datas;
+       var my_css_class = { backgroundColor : 'red' };
+       $(".fc-event-title:contains(Done)").css("background-color", "green");
+       $(".fc-event-title:contains(On-Progress)").css("background-color", "grey");
+       $(".fc-event-title:contains(Pending)").css("background-color", "#F36306");
+       // $(".fc-event-time:contains(a)").html("");
+       $(".fc-event-time").html("");
+       const boxs = document.querySelector('.fc-prev-button');
+            boxs.setAttribute('onclick', 'box()');
+       const box = document.querySelector('.fc-next-button');
+        box.setAttribute('onclick', 'box()');
+        const box2 = document.querySelector('.fc-today-button');
+        box2.setAttribute('onclick', 'box()');
+
+
+      })
+     function box(){
+       
+       var my_css_class = { backgroundColor : 'red' };
+       $(".fc-event-title:contains(Done)").css("background-color", "green");
+       $(".fc-event-title:contains(On-Progress)").css("background-color", "grey");
+       $(".fc-event-title:contains(Pending)").css("background-color", "#F36306");
+       // $(".fc-event-time:contains(a)").html("");
+       $(".fc-event-time").html("");
+     }
+     
+
 
       function delete_schedule($id){
         start_load()
