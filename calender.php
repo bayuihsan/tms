@@ -91,6 +91,7 @@
     </div>
     <!-- Event Details Modal -->
 
+
 <?php 
 // var_dump($_SESSION['login_id']);
 $schedules = $conn->query("SELECT * FROM `schedule_list` where id_user = '".$_SESSION['login_id']."'");

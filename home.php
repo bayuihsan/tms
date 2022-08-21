@@ -146,14 +146,14 @@ if($_SESSION['login_type'] != 1)
                 $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject,c.comment FROM task_list a 
                                       LEFT JOIN project_list b ON a.`project_id` = b.id 
                                       LEFT JOIN user_productivity c ON a.id = c.task_id
-                                      WHERE c.date <= '".$date."' 
+                                      WHERE c.date <= '".$date."' and a.status !=3
                                       ".$where_user."
                                       order by a.date_created desc
                                       limit 3");
                  $qry1 = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject,c.comment FROM task_list a 
                                       LEFT JOIN project_list b ON a.`project_id` = b.id
                                       LEFT JOIN user_productivity c ON a.id = c.task_id
-                                      WHERE c.date <= '".$date."' 
+                                      WHERE c.date <= '".$date."'  and a.status !=3
                                       ".$where_user."
                                       order by a.date_created desc
                                       limit 3");

@@ -7,8 +7,6 @@ foreach($user->fetch_array() as $k =>$v){
 }
 }
 ?>
-<?php
-?>
   <nav class="main-header navbar navbar-expand" style="background-color:white" id="topnav_">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
