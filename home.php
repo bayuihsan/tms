@@ -143,14 +143,14 @@ if($_SESSION['login_type'] != 1)
                 if($_SESSION['login_type'] != 1){
                   $where_user = " and c.user_id = '".$_SESSION['login_id']."' ";
                 }
-                $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject FROM task_list a 
+                $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject,c.comment FROM task_list a 
                                       LEFT JOIN project_list b ON a.`project_id` = b.id 
                                       LEFT JOIN user_productivity c ON a.id = c.task_id
                                       WHERE c.date <= '".$date."' 
                                       ".$where_user."
                                       order by a.date_created desc
                                       limit 3");
-                 $qry1 = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject FROM task_list a 
+                 $qry1 = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject,c.comment FROM task_list a 
                                       LEFT JOIN project_list b ON a.`project_id` = b.id
                                       LEFT JOIN user_productivity c ON a.id = c.task_id
                                       WHERE c.date <= '".$date."' 
@@ -194,7 +194,7 @@ if($_SESSION['login_type'] != 1)
                         <div class="inner" style="margin-top: 5px" >
                           <h5><strong>Task : <?php echo $row['task']; ?></strong></h5>
                           <h6><strong>Project : <?php echo $row['name']; ?></strong></h6>
-                          <p><?php echo $row['description']; ?></p>
+                          <p><?php echo $row['comment']; ?></p>
                         </div>
                         <span style="color: grey;font-size: 12px" >end date : <?php echo $row['end_date']; ?></span>
                       </div>
