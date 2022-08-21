@@ -139,9 +139,9 @@ if($_SESSION['login_type'] != 1)
                 $date = date('Y-m-d');
                 $i = -1;
                 // $type = array('',"Admin","Project Manager","Employee");
-                $where_user = " and c.user_id = '".$_SESSION['login_type']."' ";
+                $where_user = " ";
                 if($_SESSION['login_type'] != 1){
-                  $where_user = " and c.user_id = '".$_SESSION['login_type']."' ";
+                  $where_user = " and c.user_id = '".$_SESSION['login_id']."' ";
                 }
                 $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject FROM task_list a 
                                       LEFT JOIN project_list b ON a.`project_id` = b.id 
