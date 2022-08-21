@@ -2,7 +2,7 @@
 include'db_connect.php';
 
 $stat = array("Pending","Started","On-Progress","On-Hold","Over Due","Done");
-$qry = $conn->query("SELECT * FROM project_list where id = 3")->fetch_array();
+$qry = $conn->query("SELECT * FROM project_list")->fetch_array();
 foreach($qry as $k => $v){
 	$$k = $v;
 }

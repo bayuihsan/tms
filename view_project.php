@@ -274,6 +274,9 @@ $manager = $manager->num_rows > 0 ? $manager->fetch_array() : array();
 	$('.view_task').click(function(){
 		uni_modal("Task Details","view_task.php?id="+$(this).attr('data-id'),"mid-large")
 	})
+	$('.delete_task').click(function(){
+	_conf("Are you sure to delete this progress?","delete_task",[$(this).attr('data-id')])
+	})
 	$('#new_productivity').click(function(){
 		uni_modal("<i class='fa fa-plus'></i> New Progress","manage_progress.php?pid=<?php echo $id ?>",'large')
 	})
@@ -283,10 +286,28 @@ $manager = $manager->num_rows > 0 ? $manager->fetch_array() : array();
 	$('.delete_progress').click(function(){
 	_conf("Are you sure to delete this progress?","delete_progress",[$(this).attr('data-id')])
 	})
+
 	function delete_progress($id){
 		start_load()
 		$.ajax({
 			url:'ajax.php?action=delete_progress',
+			method:'POST',
+			data:{id:$id},
+			success:function(resp){
+				if(resp==1){
+					alert_toast("Data successfully deleted",'success')
+					setTimeout(function(){
+						location.reload()
+					},1500)
+
+				}
+			}
+		})
+	}
+	function delete_task($id){
+		start_load()
+		$.ajax({
+			url:'ajax.php?action=delete_task',
 			method:'POST',
 			data:{id:$id},
 			success:function(resp){

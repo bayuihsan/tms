@@ -220,9 +220,12 @@ if(isset($conn)) $conn->close();
       // $('.fc-daygrid-event-harness')
        var datas;
        var my_css_class = { backgroundColor : 'red' };
-       $(".fc-event-title:contains(Done)").css("background-color", "green");
-       $(".fc-event-title:contains(On-Progress)").css("background-color", "grey");
-       $(".fc-event-title:contains(Pending)").css("background-color", "#F36306");
+       // var master_title = $(".fc-event-title").html();
+       $(".fc-event-title:contains(Done)").append(` <i style="color: green" class="fa fa-check-circle"></i>`);
+       $(".fc-event-title:contains(On-Progress)").append(` <i style="color: black" class="fa fa-bars"></i>`);
+       $(".fc-event-title:contains(Pending)").append(` <i style="color: orange" class="fa fa-spinner"></i>`);
+       // $(".fc-event-title:contains(On-Progress)").css("background-color", "grey");
+       // $(".fc-event-title:contains(Pending)").css("background-color", "#F36306");
        // $(".fc-event-time:contains(a)").html("");
        $(".fc-event-time").html("");
        const boxs = document.querySelector('.fc-prev-button');
