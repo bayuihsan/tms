@@ -139,16 +139,16 @@ if($_SESSION['login_type'] != 1)
                 $i = -1;
                 // $type = array('',"Admin","Project Manager","Employee");
                 $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
-                                      LEFT JOIN project_list b
-                                      ON a.`project_id` = b.id 
-                                      WHERE b.start_date = '".$date."' 
-                                      order by b.start_date desc
+                                      LEFT JOIN project_list b ON a.`project_id` = b.id 
+                                      LEFT JOIN user_productivity c ON a.id = c.task_id
+                                      WHERE c.date = '".$date."' 
+                                      order by a.date_created desc
                                       limit 3");
                  $qry1 = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
-                                      LEFT JOIN project_list b
-                                      ON a.`project_id` = b.id 
-                                      WHERE b.start_date = '".$date."' 
-                                      order by b.start_date desc
+                                      LEFT JOIN project_list b ON a.`project_id` = b.id
+                                      LEFT JOIN user_productivity c ON a.id = c.task_id
+                                      WHERE c.date = '".$date."' 
+                                      order by a.date_created desc
                                       limit 3");
                 $valQry =$qry1->fetch_assoc();
                 if ($valQry == null) {
@@ -273,8 +273,9 @@ if($_SESSION['login_type'] != 1)
   var today = new Date();
   $('#date').html(`<span style="margin-top:-25px;position:absolute;">${today}</span>`)
    $(document).ready(function(){
-    $.get("http://localhost:8080/tms/taskData.php",function(qry){
-    // $.get("http://localhost/tms/taskData.php",function(qry){
+    // $.get("http://localhost:8080/tms/taskData.php",function(qry){
+    $.get("http://localhost/tms/taskData.php",function(qry){
+    // $.get("https://tms.wibawaabadi.com/taskData.php",function(qry){
       // alert(qry['JUMLAH_UNDONE'])
       var isi_labels = ['In Progress','Completed'];
       var isi_data=[qry['JUMLAH_UNDONE'],qry['JUMLAH_DONE']];
