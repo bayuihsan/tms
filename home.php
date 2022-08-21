@@ -42,6 +42,7 @@ if($_SESSION['login_type'] != 1)
                                     FROM task_list INNER JOIN project_list 
                                     ON task_list.`project_id` = project_list.`id` 
                                     GROUP BY task_list.project_id
+                                    order by end_date desc
                                     LIMIT 3");
               while($row= $qry->fetch_assoc()):
                 // var_dump($row);
@@ -138,16 +139,22 @@ if($_SESSION['login_type'] != 1)
                 $date = date('Y-m-d');
                 $i = -1;
                 // $type = array('',"Admin","Project Manager","Employee");
-                $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
+                $where_user = " and c.user_id = '".$_SESSION['login_type']."' ";
+                if($_SESSION['login_type'] != 1){
+                  $where_user = " and c.user_id = '".$_SESSION['login_type']."' ";
+                }
+                $qry = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject FROM task_list a 
                                       LEFT JOIN project_list b ON a.`project_id` = b.id 
                                       LEFT JOIN user_productivity c ON a.id = c.task_id
-                                      WHERE c.date = '".$date."' 
+                                      WHERE c.date <= '".$date."' 
+                                      ".$where_user."
                                       order by a.date_created desc
                                       limit 3");
-                 $qry1 = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date` FROM task_list a 
+                 $qry1 = $conn->query("SELECT a.*, b.`name`, b.`start_date`,b.`end_date`,c.subject FROM task_list a 
                                       LEFT JOIN project_list b ON a.`project_id` = b.id
                                       LEFT JOIN user_productivity c ON a.id = c.task_id
-                                      WHERE c.date = '".$date."' 
+                                      WHERE c.date <= '".$date."' 
+                                      ".$where_user."
                                       order by a.date_created desc
                                       limit 3");
                 $valQry =$qry1->fetch_assoc();
@@ -185,10 +192,11 @@ if($_SESSION['login_type'] != 1)
                         ?>
                       <div class="col-sm-10">
                         <div class="inner" style="margin-top: 5px" >
-                          <h5><strong><?php echo $row['name']; ?></strong></h5>
+                          <h5><strong>Task : <?php echo $row['task']; ?></strong></h5>
+                          <h6><strong>Project : <?php echo $row['name']; ?></strong></h6>
                           <p><?php echo $row['description']; ?></p>
                         </div>
-                        <span style="color: grey;font-size: 12px" >end date: <?php echo $row['end_date']; ?></span>
+                        <span style="color: grey;font-size: 12px" >end date : <?php echo $row['end_date']; ?></span>
                       </div>
                       <div class="col-sm-1" >
                       
